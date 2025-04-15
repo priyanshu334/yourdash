@@ -8,6 +8,7 @@ const games = [
   { name: 'Game 1', path: '/games/game1' },
   { name: 'Game 2', path: '/games/game2' },
   { name: 'Game 3', path: '/games/game3' },
+  {name:"Admin Signup", path:"/adminlogin"}
 ];
 
 const Sidebar = () => {
