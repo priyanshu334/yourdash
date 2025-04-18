@@ -41,51 +41,60 @@ export default function AdminSignup() {
     e.preventDefault();
     setError('');
     setSuccess('');
-
+  
     // Validation
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-
+  
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters');
       return;
     }
-
+  
     try {
       setLoading(true);
+  
+      const payload = {
+        adminId: formData.adminId,
+        fullName: formData.fullName,
+        phone: formData.phone,
+        password: formData.password,
+        money: parseFloat(formData.money) || 0
+      };
+  
+      console.log('Sending POST request with payload:', payload);
+  
       const response = await fetch('https://backend.nurdcells.com/api/admin/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          adminId: formData.adminId,
-          fullName: formData.fullName,
-          phone: formData.phone,
-          password: formData.password,
-          money: parseFloat(formData.money) || 0
-        }),
+        body: JSON.stringify(payload),
       });
-
+  
+      console.log('Raw response:', response);
+  
       const data = await response.json();
-
+      console.log('Parsed response JSON:', data);
+  
       if (!response.ok) {
         throw new Error(data.message || 'Something went wrong');
       }
-
+  
       setSuccess('Admin registered successfully!');
-      // Redirect to login after 2 seconds
       setTimeout(() => {
         router.push('/admin/login');
       }, 2000);
     } catch (err) {
+      console.error('Error during signup:', err);
       setError(err instanceof Error ? err.message : 'Registration failed');
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
