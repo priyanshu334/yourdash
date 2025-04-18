@@ -55,7 +55,7 @@ export default function AdminSignup() {
 
     try {
       setLoading(true);
-      const response = await fetch('http://[2a02:4780:41:72ad::1]:5000/api/admin/signup', {
+      const response = await fetch('https://backend.nurdcells.com/api/admin/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
